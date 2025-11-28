@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="atom_leg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="AtomLeg" params="name direction:=1 parent_link">
+		<xacro:property name="leg_side" value="${'l' if direction > 0 else 'r'}"/>
+
+		<!-- Leg L1/R1 Link -->
+		<link name="${name}leg_${leg_side}1_link">
+			<inertial>
+				<origin xyz="0.0011 ${direction*0.0370} -0.0046"/>
+				<mass value="0.6084"/>
+				<inertia ixx="0.0010" ixy="${-direction*0.0001}" ixz="0.0000" iyy="0.0015" iyz="${direction*0.0002}"
+								 izz="0.0017"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link1.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${name}leg_${leg_side}1_joint" type="revolute">
+			<origin xyz="0 ${direction*0.0745} -0.133"/>
+			<parent link="${parent_link}"/>
+			<child link="${name}leg_${leg_side}1_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-2.5656" upper="3.0194" effort="1000" velocity="100"/>
+		</joint>
+
+		<!-- Leg L2/R2 Link -->
+		<link name="${name}leg_${leg_side}2_link">
+			<inertial>
+				<origin xyz="-0.006 ${-direction*0.0003} -0.0057"/>
+				<mass value="2.267"/>
+				<inertia ixx="0.0032" ixy="0.0000" ixz="0.0000" iyy="0.0033" iyz="${-direction*0.0001}" izz="0.0030"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link2.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${name}leg_${leg_side}2_joint" type="revolute">
+			<origin xyz="0.00283008034419562 ${direction*0.0765} -0.0248392963919153" rpy="0 -0.113446401379624 0"/>
+			<parent link="${name}leg_${leg_side}1_link"/>
+			<child link="${name}leg_${leg_side}2_link"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="${-0.2618 if direction > 0 else -1.6581}" upper="${1.6581 if direction > 0 else 0.2618}"
+						 effort="1000" velocity="100"/>
+		</joint>
+
+		<!-- Leg L3/R3 Link -->
+		<link name="${name}leg_${leg_side}3_link">
+			<inertial>
+				<origin xyz="-0.0023 ${direction*0.0113} -0.1214"/>
+				<mass value="5.5530"/>
+				<inertia ixx="0.0412" ixy="${-direction*0.0002}" ixz="-0.0023" iyy="0.0416" iyz="${direction*0.0012}"
+								 izz="0.0117"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link3.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 -0.12" rpy="0 0.113446401379624 0"/>
+				<geometry>
+					<box size="0.08 0.08 0.24"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${name}leg_${leg_side}3_joint" type="revolute">
+			<origin xyz="0 ${-direction*0.020} -0.065"/>
+			<parent link="${name}leg_${leg_side}2_link"/>
+			<child link="${name}leg_${leg_side}3_link"/>
+			<axis xyz="0 0 1"/>
+			<limit lower="-2.7925" upper="2.7925" effort="1000" velocity="${100 if direction > 0 else 20}"/>
+		</joint>
+
+		<!-- Leg L4/R4 Link -->
+		<link name="${name}leg_${leg_side}4_link">
+			<inertial>
+				<origin xyz="-0.0125 ${-direction*0.0005} -0.1040"/>
+				<mass value="3.1000"/>
+				<inertia ixx="0.0189" ixy="0.0000" ixz="-0.0016" iyy="0.0189" iyz="${direction*0.0001}" izz="0.0028"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link4.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 -0.16" rpy="0 0.113446401379624 0"/>
+				<geometry>
+					<box size="0.08 0.08 0.32"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${name}leg_${leg_side}4_joint" type="revolute">
+			<origin xyz="-0.0468661304999053 0 -0.3213387482501"/>
+			<parent link="${name}leg_${leg_side}3_link"/>
+			<child link="${name}leg_${leg_side}4_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="0" upper="2.4871" effort="1000" velocity="100"/>
+		</joint>
+
+		<!-- Leg L5/R5 Link -->
+		<link name="${name}leg_${leg_side}5_link">
+			<inertial>
+				<origin xyz="0.000091 0.000214 -0.013313"/>
+				<mass value="0.1552"/>
+				<inertia ixx="0.000042" ixy="0.0000" ixz="0.0000" iyy="0.000037" iyz="0.0000" izz="0.000023"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link5.obj"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="${name}leg_${leg_side}5_joint" type="revolute">
+			<origin xyz="-0.031961645478192 0 -0.333525790934264" rpy="0 0.113446401379621 0"/>
+			<parent link="${name}leg_${leg_side}4_link"/>
+			<child link="${name}leg_${leg_side}5_link"/>
+			<axis xyz="0 1 0"/>
+			<limit lower="-0.8727" upper="0.5236" effort="1000" velocity="${20 if direction > 0 else 100}"/>
+		</joint>
+
+		<!-- Leg L6/R6 Link -->
+		<link name="${name}leg_${leg_side}6_link">
+			<inertial>
+				<origin xyz="0.0318 0.0000 -0.0352"/>
+				<mass value="0.6943"/>
+				<inertia ixx="0.0007" ixy="0.0000" ixz="0.0001" iyy="0.0032" iyz="0.0000" izz="0.0033"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="file://$(find dobot_atom_description)/meshes/leg/link6.obj" scale="1 ${direction} 1"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0.04 0 -0.056"/>
+				<geometry>
+					<box size="0.25 0.1 0.02"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="${name}leg_${leg_side}6_joint" type="revolute">
+			<origin xyz="0 0 -0.025"/>
+			<parent link="${name}leg_${leg_side}5_link"/>
+			<child link="${name}leg_${leg_side}6_link"/>
+			<axis xyz="1 0 0"/>
+			<limit lower="-0.48" upper="0.48" effort="1000" velocity="${20 if direction > 0 else 100}"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
+
