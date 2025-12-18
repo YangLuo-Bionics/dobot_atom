@@ -8,19 +8,6 @@
 
 	<xacro:property name="type" value="upper"/>
 
-	<link name="pelvis">
-		<inertial>
-			<origin xyz="0.0006 0.0000 -0.0998"/>
-			<mass value="6.5370"/>
-			<inertia ixx="0.0344" ixy="0.0000" ixz="0.0001" iyy="0.0292" iyz="0.0000" izz="0.0214"/>
-		</inertial>
-		<visual>
-			<geometry>
-				<mesh filename="file://$(find dobot_atom_description)/meshes/body/pelvis.obj"/>
-			</geometry>
-		</visual>
-	</link>
-
 	<!-- Without Left Leg -->
 	<!-- xacro:include filename="$(find dobot_atom_description)/xacro/leg.xacro"/>
 	<! xacro:AtomLeg name="" direction="1" parent_link="pelvis"/-->
@@ -30,7 +17,7 @@
 
 	<!-- Upper Body (Torso, Head, IMU) -->
 	<xacro:include filename="$(find dobot_atom_description)/xacro/upper_body.xacro"/>
-	<xacro:AtomUpperBody parent_link="pelvis" type="upper"/>
+	<xacro:AtomUpperBody parent_link="base_link" type="upper"/>
 
 	<!-- Left Arm -->
 	<xacro:include filename="$(find dobot_atom_description)/xacro/arm.xacro"/>

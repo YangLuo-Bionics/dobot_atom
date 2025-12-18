@@ -7,13 +7,17 @@
 <robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<link name="base_link"/>
-	<joint name="base_joint" type="fixed">
-		<parent link="base_link"/>
-		<child link="pelvis"/>
-	</joint>
 
 	<!-- 切换模式参数 -->
 	<xacro:arg name="type" default="full" />
+
+    <!-- 当为 full 模式时，创建 base_link -> pelvis 连接 -->
+    <xacro:if value="${'$(arg type)' == 'full'}">
+    	<joint name="base_joint" type="fixed">
+    		<parent link="base_link"/>
+    		<child link="pelvis"/>
+    	</joint>
+    </xacro:if>
 
 	<!-- 全身模式 -->
     <xacro:if value="${'$(arg type)' == 'full'}">

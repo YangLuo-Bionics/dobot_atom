@@ -8,28 +8,11 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot name="atom">
   <link name="base_link"/>
-  <joint name="base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="pelvis"/>
-  </joint>
-  <link name="pelvis">
-    <inertial>
-      <origin xyz="0.0006 0.0000 -0.0998"/>
-      <mass value="6.5370"/>
-      <inertia ixx="0.0344" ixy="0.0000" ixz="0.0001" iyy="0.0292" iyz="0.0000" izz="0.0214"/>
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="file:///home/ly/ros2_ws/install/dobot_atom_description/share/dobot_atom_description/meshes/body/pelvis.obj"/>
-      </geometry>
-    </visual>
-  </link>
   <!-- Without Left Leg -->
   <!-- xacro:include filename="$(find dobot_atom_description)/xacro/leg.xacro"/>
 	<! xacro:AtomLeg name="" direction="1" parent_link="pelvis"/-->
   <!-- Without Right Leg -->
   <!-- xacro:AtomLeg name="" direction="-1" parent_link="pelvis"/-->
-  <!--xacro:arg name="type" default="upper"/-->
   <link name="torso_link">
     <inertial>
       <origin xyz="-0.0155931 0 0.2199051"/>
@@ -50,7 +33,7 @@
   </link>
   <!-- upper 模式锁死躯干 -->
   <joint name="torso_joint" type="fixed">
-    <parent link="pelvis"/>
+    <parent link="base_link"/>
     <child link="torso_link"/>
   </joint>
   <link name="head_yaw_link">
@@ -409,6 +392,5 @@
     <axis xyz="0 0 1"/>
     <limit effort="18.6" lower="-1.57" upper="1.57" velocity="2.62"/>
   </joint>
-  <!--robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro"-->
   <!--xacro:include filename="$(find dobot_atom_description)/xacro/full_body.xacro"/-->
 </robot>
