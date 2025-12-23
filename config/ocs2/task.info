@@ -224,9 +224,39 @@ bodyRelative
 selfCollision
 {
   ; activate self-collision constraint
-  activate  false
+  activate  true
 
-  ; TODO: Replace the collision meshes of the arm with primitive shapes.
+  ; Self Collision raw object pairs
+  collisionObjectPairs
+  {
+       [0] "0, 2",
+       [1] "0, 3",
+       [2] "0, 4",
+       [3] "0, 5",
+
+  }
+
+  ; Self Collision pairs
+  collisionLinkPairs
+  {
+    ；[0] "torso_link, left_shoulder_roll_link",
+    ；[1] "torso_link, left_elbow_pitch_link",
+    ；[2] "torso_link, right_shoulder_roll_link",
+    ；[3] "torso_link, right_elbow_pitch_link",
+
+    ；[4] "left_shoulder_roll_link, right_shoulder_roll_link",
+    ；[5] "left_elbow_pitch_link, right_elbow_pitch_link",
+
+  }
+
+  ; minimum distance allowed between the pairs
+  minimumDistance  0.01
+
+  ; relaxed log barrier mu
+  mu      1e-3
+
+  ; relaxed log barrier delta
+  delta   1e-4
 }
 
 ; Only applied for arm joints: limits parsed from URDF
